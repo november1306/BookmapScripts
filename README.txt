@@ -3,7 +3,6 @@
 	choose to install Pack 1 only with Python
 
 2. Install BookMap 5.0, activate it	
-	MXDI-KNJE-GACT-TINX-69B2-AQDU-K2TA can be used
 	Ensure that feed_Rithmic_20160923_133501_092.bmf is present in Feeds folder. 
 
 3. Put LaunchAppScript.sikuli folder and runscript.bat into the Sikuli IDE folder
