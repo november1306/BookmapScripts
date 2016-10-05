@@ -13,14 +13,10 @@ Script actions:
 - choos data source on dialog;
 - choose file with recorded data;
 - wait while visualization starts;
-- pin down timer + pause button panel ;
+- pin down timer + pause button panel;
 - wait for 13:35:30 on timer;
-- scroll forward;
-- take screenshot;
+- take screenshot #1;
+- continue play, wait for 13:36:10;
+- pause, take screenshot #2;
 - Exit
 
-TODO:
-- add to version control
-- app.close() bug, connection is not terminated
-- add user debug info to log
-- set up screenshots 
