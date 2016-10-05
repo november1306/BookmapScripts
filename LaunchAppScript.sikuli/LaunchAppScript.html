@@ -1,0 +1,178 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>LaunchAppScript.sikuli</h2> <a href="LaunchAppScript.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> shutil
+<span class="kw">import</span> org.sikuli.script
+<span class="kw">import</span> os
+<span class="kw">import</span> time
+
+<span class="cmt">#setup preconditions</span>
+
+LOAD_TIMEOUT = <span class="dig">30</span>
+OPEN_TIMEOUT = <span class="dig">10</span>
+
+<span class="cmt">#create log file </span>
+scriptDir = getBundlePath()
+newDir = <span class="str">"logs"</span>;
+makeDir = os.path.join(scriptDir, newDir);
+<span class="kw">if</span> <span class="kw">not</span> os.path.exists(makeDir): os.mkdir(makeDir);
+
+timestring = time.strftime (<span class="str">'%d-%m_%H-%M-%S'</span>)
+logsFile = scriptDir + <span class="str">'\\logs\\'</span> + timestring + <span class="str">'.txt'</span>
+<span class="cmt">#Debug.setUserLogFile(logsFile) </span>
+Debug.setLogFile (logsFile)
+
+Settings.ActionLogs = True
+Settings.InfoLogs = True
+Settings.UserLogs = True
+Settings.UserLogPrefix =os.path.basename(scriptDir)
+Settings.UserLogTime = True
+Settings.DebugLogs = True
+Debug.on(<span class="dig">3</span>)
+Debug.log (<span class="dig">3</span>, <span class="str">"custom debug message with verb =3"</span>)
+
+
+
+Debug.user(<span class="str">"beginning of the script"</span>)
+Debug.log (<span class="dig">1</span>, <span class="str">"custom debug message with verb = 1"</span>)
+<span class="cmt">#END setup preconditions</span>
+
+App.open(<span class="str">"c:\\Program Files\\Bookmap\\BookMap.exe"</span>)
+
+waitVanish(<img src="1475603091673.png" />,LOAD_TIMEOUT)
+
+<span class="skw">wait</span>(<img src="1475603119776.png" />,LOAD_TIMEOUT)
+
+<span class="skw">click</span>(<img src="1475603134007.png" />)
+
+<span class="skw">wait</span>(<img src="1475603164180.png" />,OPEN_TIMEOUT)
+BMAppInst = App.focus(<span class="str">"Bookmap"</span>)
+
+<span class="skw">click</span>(<img src="1475603183991.png" />)
+
+<span class="skw">wait</span>(<img src="1475603222733.png" />,OPEN_TIMEOUT)
+
+<span class="skw">doubleClick</span>(<img src="1475603236761.png" />)
+
+waitVanish(<img src="1475603255052.png" />,LOAD_TIMEOUT)
+<span class="skw">wait</span>(<img src="1475603278871.png" />,LOAD_TIMEOUT)
+
+<span class="kw">if</span> <span class="kw">not</span> exists(<img src="1475603309931.png" />):
+    hover(<img src="1475603331773.png" />)
+    <span class="skw">wait</span>(<span class="dig">3</span>)
+    hover(<img src="1475603309931.png" />)
+    <span class="skw">click</span>(<img src="1475603309931.png" />)
+
+timerRegion = <span class="skw">find</span>(<img src="1475603411229.png" />)
+
+Settings.WaitScanRate = <span class="dig">20</span>
+Settings.ObserveScanRate = <span class="dig">20</span> <span class="cmt">#search image 20 times per second</span>
+Settings.MoveMouseDelay = <span class="dig">0</span>
+timerRegion.right(<span class="dig">100</span>).<span class="skw">wait</span>(Pattern(<img src="1475603530318.png" />).similar(<span class="dig">0.95</span>),<span class="dig">60</span>)
+<span class="kw">print</span>(<span class="str">"13:35:30 recognized"</span>)
+
+<span class="skw">click</span>(<img src="1475603581514.png" />)
+
+BookmapWindow = App.focusedWindow()
+regionImage = <span class="skw">capture</span>(BookmapWindow)
+shutil.move(regionImage, os.path.join(<span class="str">r'E:\Projects\Sikuli\screenshots'</span>, <span class="str">'scr1.png'</span>))
+
+<span class="skw">click</span>(<img src="1475603626004.png" />)
+
+<span class="kw">print</span>(<span class="str">"wait for 13:36:10 "</span>)
+
+<span class="skw">wait</span>(<span class="dig">40</span>)
+<span class="cmt">#click(Pattern("1475494291644.png").targetOffset(7,18))</span>
+
+<span class="skw">click</span>(Pattern(<img src="1475658917551.png" />).targetOffset(-<span class="dig">18</span>,<span class="dig">21</span>))
+<span class="skw">click</span>(<img src="1475603581514.png" />)
+
+BookmapWindow = App.focusedWindow()
+regionImage = <span class="skw">capture</span>(BookmapWindow)
+shutil.move(regionImage, os.path.join(<span class="str">r'E:\Projects\Sikuli\screenshots'</span>, <span class="str">'scr2.png'</span>))
+
+<span class="skw">wait</span>(<span class="dig">5</span>)
+
+<span class="skw">click</span>(<img src="1475603626004.png" />)
+
+<span class="kw">print</span>(<span class="str">"rewind back to 13:35:30 "</span>)
+
+<span class="skw">wait</span>(<span class="dig">3</span>)
+
+<span class="cmt">#BMAppInst = App.focus("Bookmap Replay")</span>
+<span class="cmt">#BMAppInst.close()</span>
+<span class="skw">click</span>(<img src="1475659041267.png" />)
+
+<span class="skw">wait</span>(<span class="dig">5</span>)
+</pre>
+</body>
+</html>
