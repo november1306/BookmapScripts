@@ -1,1 +1,1 @@
-runsikulix.cmd -d 2 -f mylogs.txt -r LaunchAppScript.sikuli
+runsikulix.cmd -r LaunchAppScript.sikuli
