@@ -1,6 +1,10 @@
 #definable functions
 from sikuli import *
 import os
+#import org.sikuli.script.TextRecognizer as TR
+#Settings.OcrReadText = True
+Settings.OcrLanguage = "eng"
+#TR.reset()
 
 LOAD_TIMEOUT = 30
 OPEN_TIMEOUT = 10
@@ -198,18 +202,123 @@ def resetContrastDefault():
     if exists(Pattern("Adjustautoma.png").similar(0.98)):
         click(Pattern("Adjustautoma.png").targetOffset(-138,-2))
 
-    dialogHeaderRegion = wait("ContrastConf.png",10).right(350)
+    dialogHeaderRegion = wait("ContrastConf.png",OPEN_TIMEOUT).right(350)
     dialogHeaderRegion.click("1477436564410.png")
     return;
 
-def 
-#not tested
-def recognizeAllText (inRegion):
-    #imgWithText = Image.create(capture(feedNameRegion)) # creates in memory image of the given region
-    #imgWithText1 = Image(imgWithText.resize(3)) # resizes the image with the given factor as decimal number
-    #imgWithText2 = Image.convertImageToGrayscale(imgWithText1)
-    #recognizedText = imgWithText1.text()
-    #popup(recognizedText)
+def getTradePanelRegion ():    
+    if not exists("1477910269941.png",):
+        click("1477910302441.png",OPEN_TIMEOUT)
+    tradePanelRegion = find("1477910581517.png")  
+    tradePanelRegion.setH(tradePanelRegion.getH() + 800)    
+    tradePanelRegion.highlight(2)
+
+    if not tradePanelRegion.exists(Pattern("IEnable.png").similar(0.80)):
+        tradePanelRegion.click(Pattern("IEnable-1.png").targetOffset(-27,-1)) 
+    return tradePanelRegion; #TPRegion will be used for further operations with TP    
+
+def checkMKT(tradePanelRegion):
+    accumulatedRegion = tradePanelRegion.wait("1478030812087.png",OPEN_TIMEOUT).right(100)
+    accumPositionBefore = int(accumulatedRegion.text())
+    tradedContractsRegion = tradePanelRegion.wait("1478043916673.png",OPEN_TIMEOUT).right(100)
+    tradedContractsBefore = int(tradedContractsRegion.text())    
+    tradedContractsRegion.highlight(3)
+
+    tradePanelRegion.click("1478029829596.png")
+    tradePanelRegion.type(Pattern("1478029885384.png").targetOffset(37,-2), "10")
+    click("1478030638756.png")
+    wait(2)
+    accumPositionAfter = int(accumulatedRegion.text())
+    tradedContractsAfter = int(tradedContractsRegion.text())
+    if (accumPositionAfter - accumPositionBefore <> 100 ):
+        popup ("Accumulated position before MKT " + str(accumPositionBefore) + "; after " + str(accumPositionAfter))
+    if (tradedContractsAfter - tradedContractsBefore <> 100 ):
+        popup ("Trade contracts before MKT " + str(tradedContractsBefore) + "; after " + str(tradedContractsAfter))
+
+    accumPositionBefore = int(accumulatedRegion.text())
+    tradedContractsBefore = int(tradedContractsRegion.text())
+    click("1478043483756.png")
+    wait(2)
+    accumPositionAfter = int(accumulatedRegion.text())
+    tradedContractsAfter = int(tradedContractsRegion.text())
+    if (accumPositionBefore - accumPositionAfter <> 100 ):
+        popup ("Accumulated position after MKT " + str(accumPositionBefore) + "; after " + str(accumPositionAfter))
+    if (tradedContractsAfter - tradedContractsBefore <> 100 ):
+        popup ("Trade contracts after MKT " + str(tradedContractsBefore) + "; after " + str(tradedContractsAfter))    
+    tradePanelRegion.click("1478044408549.png")
     return;
 
-#resetContrastDefault()
+def checkASK (tradePanelRegion):
+    accumulatedRegion = tradePanelRegion.wait("1478030812087.png",OPEN_TIMEOUT).right(100)
+    accumPositionBefore = int(accumulatedRegion.text())
+    tradedContractsRegion = tradePanelRegion.wait("1478043916673.png",OPEN_TIMEOUT).right(100)
+    tradedContractsBefore = int(tradedContractsRegion.text())    
+    tradedContractsRegion.highlight(3)
+
+    tradePanelRegion.click("1478029829596.png")
+    tradePanelRegion.type(Pattern("1478029885384.png").targetOffset(37,-2), "30")
+    click("1478048377135.png")
+    wait(2)
+    bidsRegion = tradePanelRegion.wait("bidsRegion.png")
+    bidsRegion.below(50).wait(Pattern("1478048480929.png").similar(0.90),LOAD_TIMEOUT)
+    accumPositionAfter = int(accumulatedRegion.text())
+    tradedContractsAfter = int(tradedContractsRegion.text())
+    if (accumPositionAfter - accumPositionBefore <> 300 ):
+        popup ("Accumulated position before ASK " + str(accumPositionBefore) + "; after " + str(accumPositionAfter))
+    if (tradedContractsAfter - tradedContractsBefore <> 300 ):
+        popup ("Trade contracts before ASK " + str(tradedContractsBefore) + "; after " + str(tradedContractsAfter))
+
+    accumPositionBefore = int(accumulatedRegion.text())
+    tradedContractsBefore = int(tradedContractsRegion.text())
+    click("1478048731123.png")
+    wait(2)
+    bidsRegion.above(50).wait(Pattern("1478049149745.png").similar(0.85),LOAD_TIMEOUT)
+    accumPositionAfter = int(accumulatedRegion.text())
+    tradedContractsAfter = int(tradedContractsRegion.text())
+    if (accumPositionBefore - accumPositionAfter <> 300 ):
+        popup ("Accumulated position after ASK " + str(accumPositionBefore) + "; after " + str(accumPositionAfter))
+    if (tradedContractsAfter - tradedContractsBefore <> 300 ):
+        popup ("Trade contracts after ASK " + str(tradedContractsBefore) + "; after " + str(tradedContractsAfter))    
+    tradePanelRegion.click("1478044408549.png")
+    return;    
+
+ 
+def checkBID (tradePanelRegion):
+    #accumulatedRegion = tradePanelRegion.wait("1478030812087.png",OPEN_TIMEOUT).right(100)
+    #accumPositionBefore = int(accumulatedRegion.text())
+    #tradedContractsRegion = tradePanelRegion.wait("1478043916673.png",OPEN_TIMEOUT).right(100)
+    #tradedContractsBefore = int(tradedContractsRegion.text())    
+    #tradedContractsRegion.highlight(3)
+
+    tradePanelRegion.click("1478029829596.png")
+    tradePanelRegion.type(Pattern("1478029885384.png").targetOffset(37,-2), "5")
+    click ("1478049435902.png")
+    click("1478050123560.png")
+    click("1478048731123.png")
+    wait(2)
+    bidsRegion = wait("bidsRegion.png")
+    bidsRegion.below(50).wait("1478050141623.png",OPEN_TIMEOUT)
+    bidsRegion.above(50).wait("1478050160883.png",OPEN_TIMEOUT)
+    bidsRegion.click("bidsRegion.png")
+    bidsRegion.below(50).wait(Pattern("1478048480929.png").similar(0.90),LOAD_TIMEOUT)
+    bidsRegion.above(50).wait(Pattern("1478049149745.png").similar(0.85),LOAD_TIMEOUT)
+    click ("1478050316359.png")
+    tradePanelRegion.click("1478044408549.png")
+    return;    
+   
+
+#not tested
+def recognizeAllText (inRegion):
+    Settings.OcrLanguage = "eng"
+    imgWithText = Image.create(capture(inRegion)) # creates in memory image of the given region
+    imgWithText1 = Image(imgWithText.resize(3)) # resizes the image with the given factor as decimal number
+    #imgWithText2 = Image.convertImageToGrayscale(imgWithText1)
+    recognizedText = imgWithText1.text()
+   # popup(recognizedText)
+    return recognizedText;
+
+tradePanelRegion = wait("1477910581517.png",10)  
+tradePanelRegion.setH(tradePanelRegion.getH() + 800)    
+
+checkBID(tradePanelRegion)
+

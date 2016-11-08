@@ -1,1 +1,0 @@
-runsikulix.cmd -r LaunchAppScript.sikuli
