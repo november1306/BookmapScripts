@@ -10,11 +10,6 @@ LOAD_TIMEOUT = 30
 OPEN_TIMEOUT = 10
 
 
-#simple import check
-def printme( str ):
-   popup (str)
-   return;
-
 def LoggingSetup(scriptDir):
     #create log file 
     newDir = "logs"; 
@@ -56,7 +51,7 @@ def OpenFeedInsert (feedName):
     click("2.png")
     return;
 
-def PinTimer(str2):
+def PinTimer():
     if not exists("1475603309931.png"):
         hover(Pattern("1477429072242.png").targetOffset(-1,15))
         
