@@ -47,6 +47,12 @@ def CustomNotes ():
         popup ("third note was not deleted") 
     rightClick(CNHeaderRegion) 
     click("Hidecolumn.png",5) 
-    wait(2)
+return;
 
+def checkStudiesConf ():
+    click ("1479763566688.png")
+    
+    if not exists("Icebergdetec.png", 10):
+        popup("Studies Configuration dialog is incorrect")     
+    click ("1479763613401.png")
 return;

@@ -13,16 +13,16 @@ OPEN_TIMEOUT = 10
 def LoggingSetup(scriptDir):
     #create log file 
     newDir = "logs"; 
-    makeDir = os.path.join(scriptDir, newDir);
-    if not os.path.exists(makeDir): os.mkdir(makeDir);
+#    makeDir = os.path.join(scriptDir, newDir);
+#    if not os.path.exists(makeDir): os.mkdir(makeDir);
 
     timestring = time.strftime ('%d-%m_%H-%M-%S')
-    logsFile = scriptDir + '\\logs\\' + timestring + '.txt'
+#    logsFile = scriptDir + '\\logs\\' + timestring + '.txt'
     #Debug.setUserLogFile(logsFile) 
-    Debug.setLogFile (logsFile)
+#   Debug.setLogFile (logsFile)
 
     Settings.ActionLogs = True
-    Settings.InfoLogs = True
+    Settings.InfoLogs = False
     Settings.UserLogs = True 
     Settings.UserLogPrefix =os.path.basename(scriptDir)
     Settings.UserLogTime = True
@@ -32,6 +32,15 @@ def LoggingSetup(scriptDir):
     Debug.user("beginning of the script")
     Debug.log (1, "custom debug message with verb = 1")
     return;    
+
+#doIgnore [0, 1]; mark Ignore checkbox 
+def checkUpdate (doIgnore):
+    if exists(Pattern("BookmapupdFC.png").similar(0.80),10):
+        if doIgnore == 1:
+            click(Pattern("1479848318131.png").targetOffset(-2,10))
+        click (Pattern("UpdateNow.png").targetOffset(50,-2))
+    return;               
+    
 
 def OpenFeedOCR (FEED_MASK):
     click("1475603183991.png")
@@ -43,8 +52,8 @@ def OpenFeedOCR (FEED_MASK):
 
 def OpenFeedInsert (feedName):
     click("1477614423279.png")
-    wait("Qpenfeedfile.png",3)
-    click("Qpenfeedfile.png")
+    wait(Pattern("Qpenfeedfile.png").similar(0.85),3)
+    click(Pattern("Qpenfeedfile.png").similar(0.85))
     
     feedDialogRegion = wait("1475603222733.png",30)
     paste(feedName)
@@ -311,9 +320,4 @@ def recognizeAllText (inRegion):
     recognizedText = imgWithText1.text()
    # popup(recognizedText)
     return recognizedText;
-
-tradePanelRegion = wait("1477910581517.png",10)  
-tradePanelRegion.setH(tradePanelRegion.getH() + 800)    
-
-checkBID(tradePanelRegion)
 

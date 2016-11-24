@@ -7,7 +7,7 @@ import time
 
 
 #define settings
-FEED_MASK ="3501"  #enter unique part of feed file name 
+FEED_MASK ="feed_Rithmic_20160923_133501_092.bmf"  #enter unique part of feed file name 
 LOAD_TIMEOUT = 30
 OPEN_TIMEOUT = 10
 #END setup preconditions
@@ -16,7 +16,7 @@ sharedLib.LoggingSetup(getBundlePath())
 
 App.open("c:\\Program Files\\Bookmap\\BookMap.exe")
 
-waitVanish("1475603091673.png",LOAD_TIMEOUT)
+waitVanish("1475603091673.png",LOAD_TIMEOUT+30)
 
 wait("1475603119776.png",LOAD_TIMEOUT)
 
@@ -24,9 +24,9 @@ click("1475603134007.png")
 
 wait("1475603164180.png",OPEN_TIMEOUT)
 BMAppInst = App.focus("Bookmap")
-
+sharedLib.checkUpdate (0)
 #open feed
-sharedLib.OpenFeedOCR (FEED_MASK)
+sharedLib.OpenFeedInsert (FEED_MASK)
 
 
 waitVanish("1475603255052.png",LOAD_TIMEOUT)

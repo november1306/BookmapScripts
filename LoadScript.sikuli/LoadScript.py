@@ -42,7 +42,7 @@ click("1475603134007.png")
 
 wait("1475603164180.png",OPEN_TIMEOUT)
 BMAppInst = App.focus("Bookmap")
-
+sharedLib.checkUpdate (0)
 
 for feedName in FEED_LIST:
     sharedLib.OpenFeedInsert (feedName)
