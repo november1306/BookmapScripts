@@ -35,6 +35,7 @@ def getTradeArea():
 
 #returns area with market level for placing orders. PAUSES PLAYBACK!
 def getBidArea(timeLineRegion): 
+    mmd = Settings.MoveMouseDelay
     Settings.MoveMouseDelay = 0
     while True:
         try: 
@@ -50,7 +51,7 @@ def getBidArea(timeLineRegion):
             pass
         if bidPattern.nearby(2).exists(Pattern("1478733458555-1.png").similar(0.85),5):
             break
-        
+    Settings.MoveMouseDelay = mmd       
     return bidPattern;   
 
 

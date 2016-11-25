@@ -35,7 +35,7 @@ def LoggingSetup(scriptDir):
 
 #doIgnore [0, 1]; mark Ignore checkbox 
 def checkUpdate (doIgnore):
-    if exists(Pattern("BookmapupdFC.png").similar(0.80),10):
+    if exists(Pattern("BookmapupdFC.png").similar(0.80),3):
         if doIgnore == 1:
             click(Pattern("1479848318131.png").targetOffset(-2,10))
         click (Pattern("UpdateNow.png").targetOffset(50,-2))

@@ -17,30 +17,31 @@ waitVanish("1475603091673.png",LOAD_TIMEOUT+30)
 wait("1475603119776.png",LOAD_TIMEOUT)
 
 click("1475603134007.png")
-
+sharedLib.checkUpdate (0)
 wait("1475603164180.png",OPEN_TIMEOUT)
 BMAppInst = App.focus("Bookmap")
-sharedLib.checkUpdate (0)
+#sharedLib.checkUpdate (0)
 #open feed
 sharedLib.OpenFeedInsert (FEED_MASK)
 #wait for timeline goes top right side
-wait(30)
-popup("time to get region")
-tradePanelRegion = getTradePanelRegion()
-#1
-popup("run scr #1")
-addSellOrderASK(tradePanelRegion)
-#2
-popup("run scr #2")
-addSellOrderBID(tradePanelRegion)
-#3
-addBuyOrderBID(tradePanelRegion)
-#4
-addBuyOrderMKT(tradePanelRegion)
-#5
-cancelOrder(tradePanelRegion)
-#6
-cancelAllOrders (tradePanelRegion)
+wait(Pattern("1480034729663.png").targetOffset(0,200),10)
+wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_UP,5)
+wait(10)
+wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_DOWN,5)
+
+tradePanelRegion = placeOrderLib.getTradePanelRegion()
+Debug.user("addSellOrderASK start #1")
+placeOrderLib.addSellOrderASK(tradePanelRegion)
+Debug.user("addSellOrderBID start #2")
+placeOrderLib.addSellOrderBID(tradePanelRegion)
+Debug.user("addBuyOrderBID start #3")
+placeOrderLib.addBuyOrderBID(tradePanelRegion)
+Debug.user("addBuyOrderMKT start #4")
+placeOrderLib.addBuyOrderMKT(tradePanelRegion)
+Debug.user("cancelOrder start #5")
+placeOrderLib.cancelOrder(tradePanelRegion)
+Debug.user("cancelAllOrders start #6")
+placeOrderLib.cancelAllOrders (tradePanelRegion)
 
 
 #run scripts
