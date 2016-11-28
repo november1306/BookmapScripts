@@ -29,7 +29,7 @@ def getTradePanelRegion ():
 #returns region right from timeLine where user can click to put orders.
 def getTradeArea():
 #    lineRegion = wait (Pattern("1478386010109.png").similar(0.75),10).left(100).below(60)
-    timeLineRegion = wait (Pattern("COB.png").similar(0.85),10).left(85).below(600)
+    timeLineRegion = wait (Pattern("COB.png").similar(0.85),10).left(90).below(600)
 #    timeLineRegion = lineRegion.wait(Pattern("1478387010276.png").similar(0.90),10).right(100).below(500) #works incorrect for white regions
 #    timeLineRegion.setX(timeLineRegion.getX() - 10) 
     timeLineRegion.highlight(3)
@@ -297,8 +297,8 @@ def stopOrderPlacement(tradePanelRegion, orderType, stopLimit):
     sizeLabelRegion = tradePanelRegion.wait("1479422013709.png")
     #set Stop Limit:
     sizeLabelRegion.setTargetOffset(40,-55) 
-    hover(sizeLabelRegion)
     btnsRegion = tradePanelRegion.wait(Pattern("1479646292969-1.png").targetOffset(3,-1),5)
+    hover(sizeLabelRegion)
     dragDrop(sizeLabelRegion, btnsRegion)
     type(stopLimit)
     #switch Order type:

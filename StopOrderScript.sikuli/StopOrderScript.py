@@ -29,17 +29,19 @@ wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_UP,6)
 wait(3)
 wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_DOWN,6)
 
+
+
 tradePanelRegion = placeOrderLib.getTradePanelRegion()
 Debug.user("stopOrderPlacement default start #1")
-placeOrderLib.stopOrderPlacement(tradePanelRegion, "MKT", "0"):
+placeOrderLib.stopOrderPlacement(tradePanelRegion, 'MKT', "0")
 Debug.user("stopOrderInvalid start #2")
 placeOrderLib.stopOrderInvalid(tradePanelRegion)
 Debug.user("stopOrderPlacement LMT start #3")
-placeOrderLib.stopOrderPlacement(tradePanelRegion, "LMT", "0"):
+placeOrderLib.stopOrderPlacement(tradePanelRegion, "LMT", "0")
 Debug.user("stopOrderPlacement LMT positive offset start #4")
-placeOrderLib.stopOrderPlacement(tradePanelRegion, "LMT", "15+"):
+placeOrderLib.stopOrderPlacement(tradePanelRegion, "LMT", "15+")
 Debug.user("stopOrderPlacement LMT negative offset start #5")
-placeOrderLib.stopOrderPlacement(tradePanelRegion, "LMT", "25-"):
+placeOrderLib.stopOrderPlacement(tradePanelRegion, "LMT", "25-")
     
 click("1475659041267.png")    
     
