@@ -1,10 +1,12 @@
 from sikuli import *
 import os
+import sharedLib
+reload (sharedLib)
 import org.sikuli.script.Pattern;
 
 
 
-#Settings.OcrLanguage = "eng"
+Settings.OcrLanguage = "eng"
 
 
 LOAD_TIMEOUT = 30
@@ -26,10 +28,10 @@ def getTradePanelRegion ():
 #AFTER FEED OPEN WAIT 5 MIN BEFORE USING THIS  
 #returns region right from timeLine where user can click to put orders.
 def getTradeArea():
-    lineRegion = wait (Pattern("1478386010109.png").similar(0.75),10).left(100).below(60)
-    lineRegion.highlight(3)
-    timeLineRegion = lineRegion.wait(Pattern("1478387010276.png").similar(0.90),10).right(100).below(500)
-    timeLineRegion.setX(timeLineRegion.getX() - 10) 
+#    lineRegion = wait (Pattern("1478386010109.png").similar(0.75),10).left(100).below(60)
+    timeLineRegion = wait (Pattern("COB.png").similar(0.85),10).left(85).below(600)
+#    timeLineRegion = lineRegion.wait(Pattern("1478387010276.png").similar(0.90),10).right(100).below(500) #works incorrect for white regions
+#    timeLineRegion.setX(timeLineRegion.getX() - 10) 
     timeLineRegion.highlight(3)
     return timeLineRegion;
 
@@ -96,8 +98,6 @@ def addSellOrderBID(tradePanelRegion):
     accumPositionBefore = accumulatedRegion.text()
     tradedContractsRegion = tradePanelRegion.wait("1478043916673-1.png",OPEN_TIMEOUT).right(100)
     tradedContractsBefore = tradedContractsRegion.text()  
-    tradedContractsRegion.highlight(3)
-
     tradePanelRegion.type(Pattern("1478029885384-1.png").targetOffset(37,-2), "12")
     try: 
         click("1478551379630.png");
@@ -109,16 +109,19 @@ def addSellOrderBID(tradePanelRegion):
     accumPositionAfter = accumulatedRegion.text()
     tradedContractsAfter = tradedContractsRegion.text()
     ordersRegion = tradePanelRegion.wait("CANCELALL.png").above(50)
+    popup("accumPositionBefore=" + accumPositionBefore + ";  accumPositionAfter=" + accumPositionAfter)
+
     if not ordersRegion.exists(Pattern("1478554588459.png").similar(0.90),3):
         popup("should be 0 opened sell orders ")    
     if (int(accumPositionBefore) - int(accumPositionAfter) != 125 ):
         popup ("Accumulated position before BID " + str(accumPositionBefore) + "; after " + str(accumPositionAfter))
+    popup("tradedContractsBefore=" + tradedContractsBefore + ";  tradedContractsAfter=" + tradedContractsAfter)    
     if (int(tradedContractsAfter) - int(tradedContractsBefore) != 125 ):
         popup ("Trade contracts before BID " + str(tradedContractsBefore) + "; after " + str(tradedContractsAfter))    
     tradePanelRegion.click("1478044408549-1.png")
     return;
 
-#ASK(sell) and verify position, number of contracts, opened sell orders
+#ASK(sell) and verify position, number of contracts,  sell orders
 def addBuyOrderBID(tradePanelRegion):
     accumulatedRegion = tradePanelRegion.wait("1478030812087.png",OPEN_TIMEOUT).right(100)
     accumPositionBefore = accumulatedRegion.text()
@@ -140,9 +143,9 @@ def addBuyOrderBID(tradePanelRegion):
     accumPositionAfter = accumulatedRegion.text()
     tradedContractsAfter = tradedContractsRegion.text()
     if (accumPositionBefore != accumPositionAfter):
-        popup ("Accumulated position before BID " + str(accumPositionBefore) + "; after " + str(accumPositionAfter))
+        popup ("Accumulated position before BID " + accumPositionBefore + "; after " + accumPositionAfter)
     if (tradedContractsAfter != tradedContractsBefore):
-        popup ("Trade contracts before BID " + str(tradedContractsBefore) + "; after " + str(tradedContractsAfter))    
+        popup ("Trade contracts before BID " + tradedContractsBefore + "; after " + tradedContractsAfter)    
     tradePanelRegion.click("1478044408549.png")
     click("1478551412852.png")
     return;    
@@ -225,10 +228,10 @@ def cancelAllOrders (tradePanelRegion):
     click("1478050123560.png")
     click("1478048731123-1.png")
     wait(2)
-    ordersRegion = wait("ordersRegion-1.png")
+    ordersRegion = tradePanelRegion.wait("CANCELALL.png")
     ordersRegion.below(50).wait("1478050141623.png",OPEN_TIMEOUT)
     ordersRegion.above(50).wait("1478050160883.png",OPEN_TIMEOUT)
-    ordersRegion.click("ordersRegion-1.png")
+    ordersRegion.click("CANCELALL.png")
     ordersRegion.below(50).wait(Pattern("1478048480929.png").similar(0.90),LOAD_TIMEOUT)
     ordersRegion.above(50).wait(Pattern("1478049149745.png").similar(0.85),LOAD_TIMEOUT)
     click ("1478050316359.png")

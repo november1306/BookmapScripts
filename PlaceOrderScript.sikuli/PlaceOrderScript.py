@@ -25,9 +25,9 @@ BMAppInst = App.focus("Bookmap")
 sharedLib.OpenFeedInsert (FEED_MASK)
 #wait for timeline goes top right side
 wait(Pattern("1480034729663.png").targetOffset(0,200),10)
-wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_UP,5)
-wait(10)
-wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_DOWN,5)
+wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_UP,6)
+wait(3)
+wheel(Pattern("1480034729663.png").targetOffset(0,200),WHEEL_DOWN,6)
 
 tradePanelRegion = placeOrderLib.getTradePanelRegion()
 Debug.user("addSellOrderASK start #1")

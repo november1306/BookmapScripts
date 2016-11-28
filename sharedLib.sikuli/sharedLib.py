@@ -52,7 +52,7 @@ def OpenFeedOCR (FEED_MASK):
 
 def OpenFeedInsert (feedName):
     click("1477614423279.png")
-    wait(Pattern("Qpenfeedfile.png").similar(0.85),3)
+    wait(Pattern("Qpenfeedfile.png").similar(0.85),5)
     click(Pattern("Qpenfeedfile.png").similar(0.85))
     
     feedDialogRegion = wait("1475603222733.png",30)
